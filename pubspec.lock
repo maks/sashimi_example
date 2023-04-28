@@ -134,11 +134,12 @@ packages:
   sashimi:
     dependency: "direct main"
     description:
-      name: sashimi
-      sha256: f450dd289174aa32f0f11247f3b3b2257546c72a934a6c9af367afaa704b8ab0
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.1.0-dev.4"
+      path: "."
+      ref: horizontal-spritesheets
+      resolved-ref: "64ea98a922fc75b0527c02ea0da937da2a236d6c"
+      url: "https://github.com/maks/sashimi"
+    source: git
+    version: "0.1.0-dev.3"
   sky_engine:
     dependency: transitive
     description: flutter

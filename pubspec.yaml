@@ -10,7 +10,11 @@ dependencies:
   flame: ^1.7.3
   flutter:
     sdk: flutter
-  sashimi: ^0.1.0-dev.4
+  # sashimi: ^0.1.0-dev.4
+  sashimi:
+    git:
+      url: https://github.com/maks/sashimi
+      ref: horizontal-spritesheets
 
 dev_dependencies:
   flutter_test:

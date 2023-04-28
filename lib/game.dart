@@ -1,17 +1,19 @@
 import 'dart:async';
-import 'dart:math' as math;
-
 import 'package:flame/components.dart';
 import 'package:flame/input.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sashimi/sashimi.dart';
 
 class ExampleGame extends SashimiGame with KeyboardEvents, MultiTouchDragDetector {
   Set<LogicalKeyboardKey> _keysPressed = {};
 
   @override
+  Color backgroundColor() => Colors.blueGrey;
+
+  @override
   Future<void> onLoad() async {
+
     final position = Vector3(10, 10, 0);
     const double scale = 10;
 
@@ -21,7 +23,8 @@ class ExampleGame extends SashimiGame with KeyboardEvents, MultiTouchDragDetecto
       size: Vector3.all(16),
       scale: Vector3(scale, scale, 1),
       angle: 45 * degrees2Radians,
-      image: await images.load('maksBlueCar.png'),
+      image: await images.load('BlueCar.png'),
+      horizontalSlices: true,
     );
 
     await add(model);
