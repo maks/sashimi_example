@@ -13,14 +13,13 @@ class ExampleGame extends SashimiGame with KeyboardEvents, MultiTouchDragDetecto
 
   @override
   Future<void> onLoad() async {
-
+    const double scale = 6;
     final position = Vector3(10, 10, 0);
-    const double scale = 10;
 
     final model = Model(
       position: position,
       sliceSize: Vector2.all(16),
-      size: Vector3.all(16),
+      size: Vector3(16, 16, 1),
       scale: Vector3(scale, scale, 1),
       angle: 45 * degrees2Radians,
       image: await images.load('BlueCar.png'),
@@ -42,6 +41,11 @@ class ExampleGame extends SashimiGame with KeyboardEvents, MultiTouchDragDetecto
     final rotateRight = _keysPressed.contains(LogicalKeyboardKey.arrowRight);
     final rotation = rotateLeft ? 1 : (rotateRight ? -1 : 0);
     kamera.rotation += rotation * dt;
+
+    final zoomIn = _keysPressed.contains(LogicalKeyboardKey.keyZ);
+    final zoomOut = _keysPressed.contains(LogicalKeyboardKey.keyX);
+    final zoom = zoomIn ? 1 : (zoomOut ? -1 : 0);
+    kamera.zoom = (kamera.zoom + zoom * dt).clamp(0.1, 5);
 
     super.update(dt);
   }
