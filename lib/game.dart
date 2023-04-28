@@ -58,4 +58,50 @@ class ExampleGame extends SashimiGame with KeyboardEvents, MultiTouchDragDetecto
     _keysPressed = keysPressed;
     return KeyEventResult.handled;
   }
+
+  final Map<int, Vector2> _dragPositions = {};
+  double _previousDistance = 0;
+
+  @override
+  void onDragStart(int pointerId, DragStartInfo info) {
+    _dragPositions[pointerId] = info.eventPosition.game;
+  }
+
+  @override
+  void onDragEnd(int pointerId, DragEndInfo info) {
+    _dragPositions.remove(pointerId);
+  }
+
+  @override
+  void onDragCancel(int pointerId) {
+    _dragPositions.remove(pointerId);
+  }
+
+  @override
+  void onDragUpdate(int pointerId, DragUpdateInfo info) {
+    _dragPositions[pointerId] = info.eventPosition.game;
+
+    // If two fingers are on the screen, zoom in/out
+    if (_dragPositions.length == 2) {
+      final distance = _dragPositions.values.first.distanceTo(
+        _dragPositions.values.last,
+      );
+
+      if (_previousDistance != 0) {
+        if (distance < _previousDistance) {
+          kamera.zoom = (kamera.zoom * 1.05).clamp(0.1, 5);
+        }
+        if (distance > _previousDistance) {
+          kamera.zoom = (kamera.zoom * (1.0 / 1.05)).clamp(0.1, 5);
+        }
+      }
+      _previousDistance = distance;
+    } else {
+      kamera.moveBy(
+        Vector2.copy(-info.delta.game)
+          ..rotate(kamera.viewfinder.angle)
+          ..scale(1.0 / kamera.viewfinder.zoom),
+      );
+    }
+  }
 }
