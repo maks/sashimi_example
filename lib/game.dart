@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flame/components.dart';
 import 'package:flame/input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,24 +12,46 @@ class ExampleGame extends SashimiGame with KeyboardEvents, MultiTouchDragDetecto
 
   @override
   Future<void> onLoad() async {
-    const double scale = 6;
     final position = Vector3(10, 10, 0);
 
-    final model = Model(
+    final car = Model(
       position: position,
       sliceSize: Vector2.all(16),
       size: Vector3(16, 16, 1),
-      scale: Vector3(scale, scale, 1),
       angle: 45 * degrees2Radians,
       image: await images.load('BlueCar.png'),
       horizontalSlices: true,
     );
 
-    await add(model);
+    final tree = Model(
+      position: Vector3(20, 20, 0),
+      sliceSize: Vector2.all(16),
+      size: Vector3(16, 16, 1),
+      angle: 45 * degrees2Radians,
+      image: await images.load('tree1.png'),
+      horizontalSlices: true,
+    );
+    final tree2 = Model(
+      position: Vector3(10, 0, 0),
+      sliceSize: Vector2.all(16),
+      size: Vector3(16, 16, 1),
+      angle: 45 * degrees2Radians,
+      image: await images.load('tree1.png'),
+      horizontalSlices: true,
+    );
 
-    kamera
-      ..follow(PositionComponent())
-      ..viewfinder.zoom = 1;
+    final house = Model(
+      position: Vector3(-15, -10, 0),
+      sliceSize: Vector2.all(32),
+      size: Vector3(32, 32, 1),
+      angle: 45 * degrees2Radians,
+      image: await images.load('house1.png'),
+      horizontalSlices: true,
+    );
+
+    await addAll([car, tree, tree2, house]);
+
+    kamera.viewfinder.zoom = 5;
 
     return super.onLoad();
   }
